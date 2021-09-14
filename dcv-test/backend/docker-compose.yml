@@ -1,0 +1,23 @@
+version: '2.4'
+
+services:
+  desafio-comanda-virtual-test-app:
+    environment:
+      - dbhost=mongodb://mongo-on-docker:27017
+    container_name: desafio-comanda-virtual
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/api:cached
+    depends_on:
+      - mongo-on-docker
+    links:
+      - mongo-on-docker
+  mongo-on-docker:
+    container_name: desafio-comanda-virtual-mongo
+    image: mongo
+    ports:
+      - '27017:27017'
